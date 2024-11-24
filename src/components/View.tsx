@@ -24,6 +24,18 @@ interface Article {
   images: Array<string> | [];
 }
 
+const RelatedArtCard = () => {
+  return (
+    <>
+      <div className="flex items-center gap-3">
+        <div className="relative">
+          <Image src="/test.jpg" alt="kuch bhi" fill={true} />
+        </div>
+      </div>
+    </>
+  );
+};
+
 const View = ({ query }: ViewProps) => {
   const [article, setArticle] = useState<Article | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -79,8 +91,8 @@ const View = ({ query }: ViewProps) => {
 
   return (
     <div className="container mx-auto px-4 my-6">
-      <div className="flex items-start gap-3 w-full">
-        <div className="post_description shadow-lg p-4 min-w-[70%] max-w-[70%]">
+      <div className="flex flex-col md:flex-row items-center md:items-center gap-3 w-full">
+        <div className="post_description shadow-lg p-4 max-w-[100%] min-w-[70%] lg:max-w-[70%]">
           <div className="relative w-full h-[400px]">
             <Image
               loading="lazy"
@@ -106,20 +118,24 @@ const View = ({ query }: ViewProps) => {
           <div className="content_box">
             <ViewContent content={article.content} />
             <div className="mt-8">
-              {article.images && article.images.map((img: string, index: Key) => (
-                <div key={index} className="relative w-full h-[400px]">
-                  <Image
-                    loading="lazy"
-                    src={img || "/test.jpg"} // Use a fallback image
-                    loader={imageLoader} // Use the custom loader
-                    className="object-cover object-center rounded-md"
-                    alt={article.title || "Article Image"}
-                    fill
-                  />
-                </div>
-              ))}
+              {article.images &&
+                article.images.map((img: string, index: Key) => (
+                  <div key={index} className="relative w-full h-[400px]">
+                    <Image
+                      loading="lazy"
+                      src={img || "/test.jpg"} // Use a fallback image
+                      loader={imageLoader} // Use the custom loader
+                      className="object-cover object-center rounded-md"
+                      alt={article.title || "Article Image"}
+                      fill
+                    />
+                  </div>
+                ))}
             </div>
           </div>
+        </div>
+        <div className="related_articles">
+          <RelatedArtCard />
         </div>
       </div>
     </div>
