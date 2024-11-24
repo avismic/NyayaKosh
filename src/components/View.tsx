@@ -106,7 +106,7 @@ const View = ({ query }: ViewProps) => {
           <div className="content_box">
             <ViewContent content={article.content} />
             <div className="mt-8">
-              {article.images.map((img: string, index: Key) => (
+              {article.images && article.images.map((img: string, index: Key) => (
                 <div key={index} className="relative w-full h-[400px]">
                   <Image
                     loading="lazy"
