@@ -2,12 +2,24 @@ import { Metadata } from "next";
 import View from "@/components/View";
 import { client } from "@/sanity/lib/client";
 
+// Define the type for the fetched article
+interface Article {
+  _id: string;
+  title: string;
+  author: string;
+  content: string;
+  publishedAt: string;
+  coverImage?: string;
+  tags?: string[];
+  slug: string;
+}
+
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string; id: string };
+  params: Promise<{ slug: string; id: string }>;
 }): Promise<Metadata> {
-  const { id } = params;
+  const { id } = await params;
 
   // Fetch article data
   const articleQuery = `*[_type == "post" && _id == "${id}"]{
@@ -20,7 +32,7 @@ export async function generateMetadata({
     "slug": slug.current
   }[0]`;
 
-  const article = await client.fetch(articleQuery);
+  const article: Article | null = await client.fetch(articleQuery, { id });
 
   if (!article) {
     return {
@@ -29,7 +41,7 @@ export async function generateMetadata({
     };
   }
 
-  const metadata: Metadata = {
+  return {
     title: `${article.title} - NyayaKosh`,
     description:
       article.content?.slice(0, 150) || "Explore legal insights at NyayaKosh.",
@@ -58,16 +70,14 @@ export async function generateMetadata({
       canonical: `https://nyayakosh.in/article/${article.slug}/${id}`,
     },
   };
-
-  return metadata;
 }
 
 export default async function Page({
   params,
 }: {
-  params: { slug: string; id: string };
+  params: Promise<{ slug: string; id: string }>;
 }) {
-  const { id } = params;
+  const { id } = await params;
 
   const articleQuery = `*[_type == "post" && _id == "${id}"]{
     _id,
