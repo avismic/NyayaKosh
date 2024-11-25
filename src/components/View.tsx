@@ -6,6 +6,7 @@ import { client } from "@/sanity/lib/client";
 import ViewContent from "./Content";
 import ContentSkeleton from "./loader/ContentLoader";
 import { PortableTextBlock } from "@portabletext/types";
+import Link from "next/link";
 
 interface ViewProps {
   query: string;
@@ -23,6 +24,22 @@ interface Article {
   category: Array<string>;
   images: Array<string> | [];
 }
+
+const RelatedCard = () => {
+  return (
+    <div className="flex flex-col shadow-lg p-4 items-start w-full max-w-[250px]">
+      <div className="relative w-full xl:w-[40%] h-[250px] mr-2">
+        <Image src="/test.jpg" alt="kuch bhi" fill={true} />
+      </div>
+      <div className="w-full mt-4 md:mt-0 md:w-[60%]">
+        <Link href="/" className="line-clamp-4 hover:underline font-semibold">
+          The Impact of Generative AI on Intellectual Property Rights in India
+        </Link>
+        <p className="text-gray-600">by avi</p>
+      </div>
+    </div>
+  );
+};
 
 const View = ({ query }: ViewProps) => {
   const [article, setArticle] = useState<Article | null>(null);
@@ -79,8 +96,8 @@ const View = ({ query }: ViewProps) => {
 
   return (
     <div className="container mx-auto px-4 my-6">
-      <div className="flex items-start gap-3 w-full">
-        <div className="post_description shadow-lg p-4 min-w-[70%] max-w-[70%]">
+      <div className="flex items-center md:items-start flex-col gap-3 w-full">
+        <div className="post_description shadow-lg min-w-[60%] lg:max-w-[60%]">
           <div className="relative w-full h-[400px]">
             <Image
               loading="lazy"
@@ -106,20 +123,24 @@ const View = ({ query }: ViewProps) => {
           <div className="content_box">
             <ViewContent content={article.content} />
             <div className="mt-8">
-              {article.images && article.images.map((img: string, index: Key) => (
-                <div key={index} className="relative w-full h-[400px]">
-                  <Image
-                    loading="lazy"
-                    src={img || "/test.jpg"} // Use a fallback image
-                    loader={imageLoader} // Use the custom loader
-                    className="object-cover object-center rounded-md"
-                    alt={article.title || "Article Image"}
-                    fill
-                  />
-                </div>
-              ))}
+              {article.images &&
+                article.images.map((img: string, index: Key) => (
+                  <div key={index} className="relative w-full h-[400px]">
+                    <Image
+                      loading="lazy"
+                      src={img || "/test.jpg"} // Use a fallback image
+                      loader={imageLoader} // Use the custom loader
+                      className="object-cover object-center rounded-md"
+                      alt={article.title || "Article Image"}
+                      fill
+                    />
+                  </div>
+                ))}
             </div>
           </div>
+        </div>
+        <div className="post_related grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full lg:w-[40%] p-4">
+          <RelatedCard />
         </div>
       </div>
     </div>
