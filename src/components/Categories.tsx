@@ -52,7 +52,6 @@ function Categories({
 
   return (
     <div className="mb-8">
-      <h2 className="text-xl font-semibold mb-2">Filter by Category:</h2>
       <div className="flex flex-wrap gap-2 items-center">
         <Button
           variant={selectedCategory === "" ? "default" : "outline"}
