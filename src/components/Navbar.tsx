@@ -1,14 +1,25 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { Search } from "lucide-react";
+import { Search, SearchIcon } from "lucide-react";
+import { useState } from "react";
 function Navbar() {
+  const [showSearchBar, setSearchBar] = useState<boolean>(false);
   return (
     <>
       <header className="border-b z-50 bg-white/65 backdrop-blur-md sticky top-0 left-0">
         <div className="container mx-auto px-4 py-3 ">
-          <div className="flex flex-col items-start justify-between">
+          <div className="flex relative flex-col md:flex-row items-start md:items-center justify-between">
+            <Button
+              type="button"
+              variant="outline"
+              className="absolute right-0 block md:hidden"
+              onClick={() => setSearchBar(!showSearchBar)}
+            >
+              <SearchIcon />
+            </Button>
             <Link
               href="/"
               className="text-4xl font-bold flex items-center gap-2"
@@ -18,7 +29,9 @@ function Navbar() {
               </div>
               <span className="text-[#295F98] text-[1.7rem]">NyayaKosh</span>
             </Link>
-            <div className="flex mt-4 w-full flex-col md:flex-row gap-4">
+            <div
+              className={`flex mt-4 md:mt-0 w-full md:w-[400px] ${showSearchBar ? "flex" : "hidden md:flex"} flex-col md:flex-row gap-4`}
+            >
               <div className="flex-grow">
                 <Input
                   type="text"
