@@ -25,7 +25,7 @@ function Navbar() {
               className="text-4xl font-bold flex items-center gap-2"
             >
               <div className="relative w-[40px] h-[40px]">
-                <Image src="/LogoNew.svg" alt="NyayKosh logo" fill={true} />
+                <Image src="/nyaya-logo.png" alt="NyayKosh logo" fill={true} />
               </div>
               <span className="text-[#295F98] text-[1.7rem]">NyayaKosh</span>
             </Link>
