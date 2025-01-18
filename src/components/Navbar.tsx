@@ -24,8 +24,13 @@ function Navbar() {
               href="/"
               className="text-4xl font-bold flex items-center gap-2"
             >
-              <div className="relative w-[40px] h-[40px]">
-                <Image src="/nyaya-logo.png" alt="NyayKosh logo" fill={true} />
+              <div className="relative w-[50px] h-[50px]">
+                <Image 
+                  src="/nyaya-logo.png" 
+                  alt="NyayKosh logo" 
+                  fill={true} 
+                  className="object-cover"
+                />
               </div>
               <span className="text-[#295F98] text-[1.7rem]">NyayaKosh</span>
             </Link>
