@@ -1,16 +1,22 @@
 import { useState } from "react";
 import { Input } from "./ui/input";
 
+type Article = {
+  _id: string;
+  title: string;
+  slug: { current: string };
+};
+
 const Search = () => {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState<Article[]>([]);
 
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
 
     if (e.target.value.length > 1) {
       const res = await fetch(`/api/search?tag=${e.target.value}`);
-      const data = await res.json();
+      const data: Article[] = await res.json();
       setResults(data);
     } else {
       setResults([]);

@@ -1,5 +1,6 @@
 import { PortableText, PortableTextReactComponents } from "@portabletext/react";
 import { PortableTextBlock } from "@portabletext/types";
+import Image from "next/image";
 
 interface ViewContentProps {
   content: PortableTextBlock[]; // Define the type of content based on Portable Text structure
@@ -47,7 +48,7 @@ const ViewContent: React.FC<ViewContentProps> = ({ content }) => {
       }: {
         value: { asset: { url: string }; alt?: string };
       }) => (
-        <img
+        <Image
           src={value.asset.url}
           alt={value.alt || "Image"}
           className="rounded-md my-4"
