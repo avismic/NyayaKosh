@@ -64,6 +64,8 @@ const View = ({ query }: ViewProps) => {
     fetchArticles();
   }, [query]);
 
+  
+
   if (isLoading) {
     return <ContentSkeleton />;
   }
